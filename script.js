@@ -17,7 +17,7 @@ class Calculator {
 
     isAllowedOperation(char) {
         if (char instanceof String && char.length != 0) {
-            return this.allowedOperation.includes(char.charAt(0));
+            return this.allowedOperation.includes(char.at(0));
         }
 
         return false;
@@ -29,7 +29,7 @@ class Calculator {
         }
         
         let number = 0;
-        // 1 2 = (1 * 10^1) + (2 * 10^0)
+        
         for (let i = this.numberBuffer.length - 1; i >= 0; i--) {
             number += this.numberBuffer[this.numberBuffer.length - i - 1] * Math.pow(10, i);
         }
@@ -104,7 +104,7 @@ class Calculator {
         if (this.allowedOperation.includes(operation)) {
             let number = this.flushNumberBuffer();
 
-            if (number == undefined) {
+            if (number === undefined) {
                 number = val;
             }
 
@@ -176,10 +176,8 @@ class Calculator {
         }
 
         if (returnValue != undefined) {
-            const valueStr = returnValue.toString();
-
-            for (let i = 0; i < valueStr.length; i++) {
-                this.addDigit(parseInt(valueStr.charAt(i)));
+            for (const digit of returnValue.toString()) {
+                this.addDigit(parseInt(digit));
             }
         }
 
@@ -201,7 +199,7 @@ function sendCalculatorCommand(command) {
         calculatorDisplay.innerHTML = '';
     }
 
-    if (charCode >= 48 && charCode <= 57) {
+    if (Number.isInteger(charCode)) {
         let number = charCode - 48;
 
         calculator.addDigit(number);
