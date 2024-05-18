@@ -8,7 +8,7 @@ Teste o código no meu [CodePen](https://codepen.io/atomiclake/pen/BaejwmY).
 - ✅ Suporte à entrada do teclado.
 - ✅ Lembra a última operação.
 
-![Imagem demonstrando a calculadora](https://github.com/atomiclake/javascript-calculator/assets/155380722/09efc5b2-a30d-4750-8b76-18183e3b0e30)
+![Imagem demonstrando a calculadora](https://github.com/atomiclake/calculadora-javascript/assets/155380722/c6491f03-3f50-4a77-93e7-62bbb29b831f)
 
 ## Funcionalidades em progresso (v1.0):
 
