@@ -8,8 +8,6 @@ Teste o código no meu [CodePen](https://codepen.io/atomiclake/pen/BaejwmY).
 - ✅ Suporte à entrada do teclado.
 - ✅ Lembra a última operação.
 
-![Imagem demonstrando a calculadora](https://github.com/atomiclake/calculadora-javascript/assets/155380722/c6491f03-3f50-4a77-93e7-62bbb29b831f)
-
 ## Bugs conhecidos
 
 - Operações não consideram a casa decimal.
@@ -22,3 +20,6 @@ Teste o código no meu [CodePen](https://codepen.io/atomiclake/pen/BaejwmY).
 - [ ] Mudar sinal.
 - [ ] Adicionar casa decimal.
 - [ ] Suporte à operações em cadeia (ex.: 1 + 2 + 3).
+
+## Exemplo
+![Imagem demonstrando a calculadora](https://github.com/atomiclake/calculadora-javascript/assets/155380722/c6491f03-3f50-4a77-93e7-62bbb29b831f)
