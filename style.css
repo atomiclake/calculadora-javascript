@@ -1,0 +1,16 @@
+#calculator {
+    min-width: 250px;
+    max-width: 270px;
+
+    border-radius: 5;
+    background-color: lightgray;
+}
+
+textarea {
+    resize: none;
+}
+
+div > button {
+    width: 100%;
+    height: 100%;
+}
