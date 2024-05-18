@@ -2,9 +2,18 @@ const EXPRESSION_NUMBER_TYPE = 0;
 const EXPRESSION_OPERATION_TYPE = 1;
 
 class Expression {
+
     constructor(value, type){
         this.type = type;
         this.value = value;
+    }
+
+    isNumber() {
+        return this.type == EXPRESSION_NUMBER_TYPE;
+    }
+
+    isOperation() {
+        return this.type == EXPRESSION_OPERATION_TYPE;
     }
 }
 
@@ -12,7 +21,7 @@ class Calculator {
     constructor(){
         this.numberBuffer = [];
         this.expressionBuffer = [];
-        this.allowedOperation = ['+', '-', '*', '/']
+        this.allowedOperation = ['+', '-', '*', '/'];
     }
 
     isAllowedOperation(char) {
@@ -29,9 +38,9 @@ class Calculator {
         }
         
         let number = 0;
-        
+
         for (let i = this.numberBuffer.length - 1; i >= 0; i--) {
-            number += this.numberBuffer[this.numberBuffer.length - i - 1] * Math.pow(10, i);
+            number += this.numberBuffer.at(-i - 1) * (10 ** i);
         }
 
         this.deleteAllDigits();
@@ -45,10 +54,10 @@ class Calculator {
 
     expressionBufferHasNumber() {
         if (this.expressionBuffer.length == 0) {
-            return false
+            return false;
         }
 
-        return this.expressionBuffer[this.expressionBuffer.length - 1].type == EXPRESSION_NUMBER_TYPE;
+        return this.expressionBuffer[this.expressionBuffer.length - 1].isNumber();
     }
 
     addDigit(digit) {
@@ -56,17 +65,12 @@ class Calculator {
             this.numberBuffer.push(digit);
         }
         else {
-            console.error(`Value '${digit}' is not a digit`)
+            console.error(`Value '${digit}' is not a digit`);
         }
     }
 
     deleteDigit() {
-        if (this.numberBufferHasValue()) {
-            this.numberBuffer.pop();
-            return true;
-        }
-        
-        return false;
+        return this.numberBuffer.pop() != undefined;
     }
 
     deleteAllDigits() {
@@ -79,7 +83,6 @@ class Calculator {
         this.expressionBuffer = [];
     }
 
-    // 1 + 2 + 3
     addOperation(operation) {
         // No number available to perform a binary operation
         if (!this.expressionBufferHasNumber() && !this.numberBufferHasValue()) {
@@ -117,6 +120,7 @@ class Calculator {
 
         return true;
     }
+
     evaluate() {
         let number = this.flushNumberBuffer();
 
@@ -128,13 +132,11 @@ class Calculator {
         let result = [];
         let lastOp = undefined;
 
-        for (let i = 0; i < this.expressionBuffer.length; i++) {
-            const exp = this.expressionBuffer[i];
-
-            if (exp.type == EXPRESSION_OPERATION_TYPE) {
+        for (const exp of this.expressionBuffer) {
+            if (exp.isOperation()) {
                 lastOp = exp.value;
             }
-            else if (exp.type == EXPRESSION_NUMBER_TYPE) {
+            else if (exp.isNumber()) {
                 if (result.length > 2 && lastOp != undefined) {
                     if (lastOp == '+') {
                         returnValue += result[0] + result[1];
@@ -191,19 +193,49 @@ const calculator = new Calculator();
 const calculatorDisplay = document.getElementById('display');
 let clearDisplayOnNextInput = false;
 
-function sendCalculatorCommand(command) {
-    let charCode = command.charCodeAt(0);
+document.querySelector('body').addEventListener('keydown', (e) => {
+    sendKbdCalculatorCommand(e);
+});
 
+function sendKbdCalculatorCommand(e) {
+    if (e instanceof KeyboardEvent) {
+        const key = e.key;
+
+        if (!Number.isNaN(parseInt(key))) {
+            sendCalculatorCommand(key);
+        } else {
+            if (key == '+') {
+                sendCalculatorCommand('add');
+            } else if (key == '-') {
+                sendCalculatorCommand('subtract');
+            } else if (key == '*') {
+                sendCalculatorCommand('multiply');
+            } else if (key == '/') {
+                sendCalculatorCommand('divide');
+            } else if (key == 'Backspace') {
+                sendCalculatorCommand('delete-character');
+            } else if (e.ctrlKey && key == 'Backspace') {
+                sendCalculatorCommand('clear');
+            } else if (key == 'Delete') {
+                sendCalculatorCommand('clear-everything');
+            } else if (key == 'Enter') {
+                sendCalculatorCommand('evaluate');
+            }
+        }
+    }
+}
+
+function sendCalculatorCommand(command) {
     if (clearDisplayOnNextInput) {
         clearDisplayOnNextInput = false;
         calculatorDisplay.innerHTML = '';
     }
 
-    if (Number.isInteger(charCode)) {
-        let number = charCode - 48;
+    var possibleNumber = parseInt(command);
 
-        calculator.addDigit(number);
-        calculatorDisplay.innerHTML += command;
+    if (!Number.isNaN(possibleNumber)) {
+        calculator.addDigit(possibleNumber);
+        calculatorDisplay.innerHTML += possibleNumber;
     } else {
         if (command == 'add') {
             if (calculator.addOperation('+')) {

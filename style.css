@@ -6,8 +6,10 @@
     background-color: lightgray;
 }
 
-textarea {
+#display {
     resize: none;
+    height: 35;
+    font-size: 1.1rem;
 }
 
 div > button {
