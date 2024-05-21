@@ -21,8 +21,9 @@
             <p><kbd>Enter</kbd>: Calcular.</p>
         </div>
         <div id="calculator" class="container d-flex flex-column">
-            <div class="row flex-grow-1">
-                <textarea id="display" title="calculator_display" placeholder="0" readonly rows="1" dir="rtl"></textarea>
+            <div class="row flex-grow-1 d-flex flex-column">
+                <textarea class="display displayupper" title="calculator_display" placeholder="0" readonly rows="1"></textarea>
+                <textarea class="display displaylower" title="calculator_display" placeholder="0" readonly rows="1"></textarea>
             </div>
             <div class="row flex-grow-1">
                 <div class="col">
@@ -88,7 +89,7 @@
                     <button type="button" class="btn btn-primary" onclick="sendCalculatorCommand('0')">0</button>
                 </div>
                 <div class="col">
-                    <button type="button" class="btn btn-primary" disabled onclick="sendCalculatorCommand('add-decimal')">,</button>
+                    <button type="button" class="btn btn-primary" onclick="sendCalculatorCommand('add-decimal')">,</button>
                 </div>
                 <div class="col">
                     <button type="button" class="btn btn-primary" onclick="sendCalculatorCommand('evaluate')">=</button>
